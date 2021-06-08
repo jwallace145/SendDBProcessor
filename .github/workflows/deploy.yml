@@ -20,7 +20,7 @@ jobs:
           aws_access_key_id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws_secret_access_key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws_region: ${{ secrets.AWS_REGION }}
-          function_name: test-lambda-github-action
+          function_name: test-lambda-function
           role: arn:aws:iam::650503560686:role/LambdaAdminAccess
           runtime: python3.8
           source: lambda_function.py

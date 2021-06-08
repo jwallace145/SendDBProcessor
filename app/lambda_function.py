@@ -3,34 +3,21 @@ import json
 from models.climber import Climber
 
 from clients.dynamodb_client import DynamoDBClient
+from clients.climbers_client import ClimbersClient
 
 
 def lambda_handler(event, context):
 
-    dynamodb_client = DynamoDBClient()
+    event_resource = event['resource']
+    print(f'\n\nevent resource: {event_resource}')
 
-    email = event['headers']['email']
-    username = event['headers']['username']
-    first_name = event['headers']['first_name']
-    last_name = event['headers']['last_name']
-
-    climber = Climber(
-        email=email,
-        username=username,
-        first_name=first_name,
-        last_name=last_name
+    # initialize climbers client
+    climbers_client = ClimbersClient(
+        http_method=event['httpMethod'],
+        headers=event['headers']
     )
 
-    dynamodb_client.put_climber(climber)
+    # process event
+    response = climbers_client.process()
 
-    return {
-        'statusCode': 200,
-        'headers': {
-            'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*'
-        },
-        'body': json.dumps({
-            'status': 'another one'
-        }),
-        "isBase64Encoded": False
-    }
+    return response

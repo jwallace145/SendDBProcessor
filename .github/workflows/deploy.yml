@@ -24,7 +24,7 @@ jobs:
           python-version: ${{ matrix.python-version }}
 
       - name: Zip Lambda Function
-        run: cd SendDBProcessor/; zip -r SendDBProcessor.zip ./;
+        run: cd SendDBProcessor/; zip -r ../SendDBProcessor.zip ./;
 
       - name: Deploy to AWS Lambda
         uses: appleboy/lambda-action@v0.1.3

@@ -1,0 +1,1 @@
+CLIMBERS_TABLE = 'climbers'

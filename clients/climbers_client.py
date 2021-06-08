@@ -18,6 +18,12 @@ class ClimbersClient:
     def process(self):
         return self.actions[self.http_method]
 
+    def delete_climber(self, headers):
+        return 0
+
+    def get_climber(self, headers):
+        return 0
+
     def put_climber(self, headers):
 
         # create climber

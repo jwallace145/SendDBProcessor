@@ -1,8 +1,5 @@
 import json
 
-from models.climber import Climber
-
-from clients.dynamodb_client import DynamoDBClient
 from clients.climbers_client import ClimbersClient
 
 

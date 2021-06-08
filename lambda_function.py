@@ -9,7 +9,7 @@ def lambda_handler(event, context):
             'Access-Control-Allow-Origin': '*'
         },
         'body': json.dumps({
-            'status': 'from test'
+            'status': 'another one'
         }),
         "isBase64Encoded": False
     }

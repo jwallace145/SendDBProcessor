@@ -3,8 +3,8 @@ import datetime
 import random
 import sys
 
-from ..models.climber import Climber
-from .. import constants
+from models.climber import Climber
+import constants
 
 
 class DynamoDBClient:

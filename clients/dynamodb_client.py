@@ -59,14 +59,12 @@ class DynamoDBClient:
             }
         }
 
-        print(key_dict)
-
-        response = self.client.delete_item(
+        item = self.client.delete_item(
             TableName=table,
             Key=key_dict
         )
 
-        return response
+        return item
 
     def get_item(self, table: str, key: str) -> None:
 
@@ -97,9 +95,9 @@ class DynamoDBClient:
         return response
 
     def delete_climber(self, climber_id: str) -> None:
-        response = self.delete_item(
+        climber = self.delete_item(
             table=constants.CLIMBERS_TABLE,
             key=climber_id
         )
 
-        return response
+        return climber

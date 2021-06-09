@@ -32,7 +32,25 @@ class ClimbersProcessor:
         return response
 
     def delete_climber(self, headers):
-        return 0
+        """ Handles all DELETE requests to climbers resource """
+        climber_id = headers['climber_id']
+
+        climber = self.dynamodb_client.delete_climber(climber_id)
+
+        self.logger.info(
+            'this is the climber from the climbers processor %s', climber)
+
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'status': 'successfully deleted a climber from the climbers table'
+            }),
+            "isBase64Encoded": False
+        }
 
     def get_climber(self, headers):
         """ Handles all GET requests to climbers resource """

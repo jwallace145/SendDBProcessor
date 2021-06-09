@@ -3,6 +3,7 @@ import datetime
 import random
 import sys
 
+from clients.logger import create_logger
 from models.climber import Climber
 import constants
 
@@ -15,6 +16,9 @@ class DynamoDBClient:
 
         # create dynamo db client
         self.client = boto3.client('dynamodb', region_name=region)
+
+        # create logger
+        self.logger = create_logger(__name__)
 
     def put_item(self, table: str, item: object) -> None:
 
@@ -63,6 +67,24 @@ class DynamoDBClient:
         )
 
         return response
+
+    def get_item(self, table: str, key: str) -> None:
+
+        key_dict = {
+            'id': {
+                'S': key
+            }
+        }
+        response = self.client.get_item(
+            TableName=table,
+            Key=key_dict
+        )
+        return response
+
+    def get_climber(self, climber_id: str) -> None:
+        climber = self.get_item(table=constants.CLIMBERS_TABLE, key=climber_id)
+        self.logger.info('get climber %s', climber)
+        return climber
 
     def put_climber(self, climber: Climber) -> None:
         response = self.put_item(

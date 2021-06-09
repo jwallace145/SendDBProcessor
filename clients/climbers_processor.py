@@ -30,7 +30,22 @@ class ClimbersProcessor:
         return 0
 
     def get_climber(self, headers):
-        return 0
+        """ Handles all GET requests to climbers resource """
+        climber_id = headers['climber_id']
+
+        climber = self.dynamodb_client.get_climber(climber_id)
+
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'status': 'successfully got a climber from climbers table'
+            }),
+            "isBase64Encoded": False
+        }
 
     def put_climber(self, headers):
 

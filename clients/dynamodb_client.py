@@ -79,6 +79,7 @@ class DynamoDBClient:
             TableName=table,
             Key=key_dict
         )
+        self.logger.info('this is the key dict %s', key_dict)
         self.logger.info('this is the item from the get item call %s', item)
         return item
 

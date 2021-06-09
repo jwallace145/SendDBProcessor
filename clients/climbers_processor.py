@@ -2,6 +2,8 @@ import json
 from models.climber import Climber
 from clients.dynamodb_client import DynamoDBClient
 
+from clients.logger import create_logger
+
 
 class ClimbersProcessor:
 
@@ -14,6 +16,9 @@ class ClimbersProcessor:
             'GET': self.get_climber,
             'PUT': self.put_climber
         }
+
+        # create logger
+        self.logger = create_logger(__name__)
 
     def process(self, payload: dict = {}) -> None:
 
@@ -34,6 +39,9 @@ class ClimbersProcessor:
         climber_id = headers['climber_id']
 
         climber = self.dynamodb_client.get_climber(climber_id)
+
+        self.logger.info(
+            'this is the climber obj from the climebrs processor class %s', climber)
 
         return {
             'statusCode': 200,

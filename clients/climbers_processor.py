@@ -1,22 +1,30 @@
 import json
 from models.climber import Climber
-from clients.clients import dynamodb_client
+from clients.dynamodb_client import DynamoDBClient
 
 
-class ClimbersClient:
+class ClimbersProcessor:
 
-    def __init__(self, http_method: str = 'GET', headers: dict = {}) -> None:
-        self.http_method = http_method
-        self.headers = headers
+    def __init__(self, dynamodb_client: DynamoDBClient) -> None:
+        self.dynamodb_client = dynamodb_client
 
+        # actions dictionary - contains http methods and their respective method to process the event
         self.actions = {
-            'DELETE': self.delete_climber(headers),
-            'GET': self.get_climber(headers),
-            'PUT': self.put_climber(headers)
+            'DELETE': self.delete_climber,
+            'GET': self.get_climber,
+            'PUT': self.put_climber
         }
 
-    def process(self):
-        return self.actions[self.http_method]
+    def process(self, payload: dict = {}) -> None:
+
+        # get http method and headers from payload
+        http_method = payload['http_method']
+        headers = payload['headers']
+
+        # call the appropriate method
+        response = self.actions[http_method](headers)
+
+        return response
 
     def delete_climber(self, headers):
         return 0
@@ -35,7 +43,7 @@ class ClimbersClient:
         )
 
         # put climber
-        dynamodb_client.put_climber(climber)
+        self.dynamodb_client.put_climber(climber)
 
         return {
             'statusCode': 200,

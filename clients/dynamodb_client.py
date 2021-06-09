@@ -75,11 +75,12 @@ class DynamoDBClient:
                 'S': key
             }
         }
-        response = self.client.get_item(
+        item = self.client.get_item(
             TableName=table,
             Key=key_dict
         )
-        return response
+        self.logger.info('this is the item from the get item call %s', item)
+        return item
 
     def get_climber(self, climber_id: str) -> None:
         climber = self.get_item(table=constants.CLIMBERS_TABLE, key=climber_id)

@@ -1,20 +1,32 @@
-import json
-
-from clients.climbers_client import ClimbersClient
+from clients.climbers_processor import ClimbersProcessor
+from clients.routes_processor import RoutesProcessor
+from clients.dynamodb_client import DynamoDBClient
+from clients.event_parser import EventParser
 
 
 def lambda_handler(event, context):
 
-    event_resource = event['resource']
-    print(f'\n\nevent resource: {event_resource}')
+    # create dynamodb client
+    dynamodb_client = DynamoDBClient()
 
-    # initialize climbers client
-    climbers_client = ClimbersClient(
-        http_method=event['httpMethod'],
-        headers=event['headers']
-    )
+    # create processors
+    climbers_processor = ClimbersProcessor(dynamodb_client)
+    routes_processor = RoutesProcessor(dynamodb_client)
 
-    # process event
-    response = climbers_client.process()
+    # create event parser
+    event_parser = EventParser(event)
+
+    # get event details
+    resource = event_parser.resource
+    payload = event_parser.payload
+
+    # create resource processors switch dict
+    processors = {
+        '/{climbers+}': climbers_processor.process,
+        '/{routes+}': routes_processor.process
+    }
+
+    # process the event
+    response = processors[resource](payload)
 
     return response

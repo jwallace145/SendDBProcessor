@@ -1,4 +1,3 @@
-from _typeshed import NoneType
 import boto3
 import datetime
 import random

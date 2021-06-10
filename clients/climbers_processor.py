@@ -105,10 +105,7 @@ class ClimbersProcessor:
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*',
-                'Access-Control-Request-Headers': '*'
+                'Access-Control-Allow-Headers': '*'
             },
-            'body': json.dumps({
-                'status': 'not to sure'
-            }),
             'isBase64Encoded': False
         }

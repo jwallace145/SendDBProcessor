@@ -76,28 +76,45 @@ class ClimbersProcessor:
 
     def put_climber(self, headers):
 
-        # create climber
-        climber = Climber(
-            email=headers['email'],
-            username=headers['username'],
-            first_name=headers['first_name'],
-            last_name=headers['last_name']
-        )
+        # check for climber existence by email
+        climber = self.dynamodb_client.get_climber_by_email(headers['email'])
 
-        # put climber
-        self.dynamodb_client.put_climber(climber)
+        if not climber:
 
-        return {
-            'statusCode': 200,
-            'headers': {
-                'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
-            },
-            'body': json.dumps({
-                'status': 'successfully inserted a climber into climbers table'
-            }),
-            'isBase64Encoded': False
-        }
+            # create climber
+            climber = Climber(
+                email=headers['email'],
+                username=headers['username'],
+                first_name=headers['first_name'],
+                last_name=headers['last_name']
+            )
+
+            # put climber
+            self.dynamodb_client.put_climber(climber)
+
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
+                    'status': 'successfully inserted a climber into climbers table'
+                }),
+                'isBase64Encoded': False
+            }
+        else:
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
+                    'status': 'climber email already exists in the database'
+                }),
+                'isBase64Encoded': False
+            }
 
     def get_options(self, headers):
         return {

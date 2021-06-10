@@ -1,7 +1,9 @@
+from _typeshed import NoneType
 import boto3
 import datetime
 import random
 import sys
+from boto3.dynamodb.conditions import Key
 
 from clients.logger import create_logger
 from models.climber import Climber
@@ -80,6 +82,23 @@ class DynamoDBClient:
         self.logger.info('this is the key dict %s', key_dict)
         self.logger.info('this is the item from the get item call %s', item)
         return item
+
+    def get_climber_by_email(self, email: str) -> None:
+        climber = self.client.query(
+            TableName=constants.CLIMBERS_TABLE,
+            IndexName='email-index',
+            KeyConditionExpression='email = :email',
+            ExpressionAttributeValues={
+                ':email': {
+                    'S': email
+                }
+            }
+        )
+
+        if len(climber['items']) == 0:
+            return None
+        else:
+            return climber
 
     def get_climber(self, climber_id: str) -> None:
         climber = self.get_item(table=constants.CLIMBERS_TABLE, key=climber_id)

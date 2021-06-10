@@ -14,7 +14,8 @@ class ClimbersProcessor:
         self.actions = {
             'DELETE': self.delete_climber,
             'GET': self.get_climber,
-            'PUT': self.put_climber
+            'PUT': self.put_climber,
+            'OPTIONS': self.get_options
         }
 
         # create logger
@@ -95,5 +96,18 @@ class ClimbersProcessor:
             'body': json.dumps({
                 'status': 'successfully inserted a climber into climbers table'
             }),
-            "isBase64Encoded": False
+            'isBase64Encoded': False
+        }
+
+    def get_options(self, headers):
+        return {
+            'statusCode': 200,
+            'headers': {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps({
+                'status': 'not to sure'
+            }),
+            'isBase64Encoded': False
         }

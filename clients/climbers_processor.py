@@ -66,8 +66,7 @@ class ClimbersProcessor:
             'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*',
-                'Access-Control-Request-Headers': '*'
+                'Access-Control-Allow-Origin': '*'
             },
             'body': json.dumps({
                 'status': 'successfully got a climber from climbers table'
@@ -105,7 +104,8 @@ class ClimbersProcessor:
             'statusCode': 200,
             'headers': {
                 'Content-Type': 'application/json',
-                'Access-Control-Allow-Origin': '*'
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Request-Headers': '*'
             },
             'body': json.dumps({
                 'status': 'not to sure'

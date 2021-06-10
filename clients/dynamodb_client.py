@@ -94,7 +94,7 @@ class DynamoDBClient:
             }
         )
 
-        if len(climber['items']) == 0:
+        if len(climber['Items']) == 0:
             return None
         else:
             return climber

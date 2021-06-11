@@ -1,12 +1,12 @@
+import constants
+from models.climber import Climber
+from clients.logger import create_logger
 import boto3
 import datetime
 import random
 import sys
 from boto3.dynamodb.conditions import Key
-
-from clients.logger import create_logger
-from models.climber import Climber
-import constants
+from models.route import Route
 
 
 class DynamoDBClient:
@@ -119,3 +119,11 @@ class DynamoDBClient:
         )
 
         return climber
+
+    def put_route(self, route: Route) -> None:
+        response = self.put_item(
+            table=constants.ROUTES_TABLE,
+            item=route
+        )
+
+        return response

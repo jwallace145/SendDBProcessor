@@ -23,8 +23,7 @@ def lambda_handler(event, context):
     # create resource processors switch dict
     processors = {
         '/{climbers+}': climbers_processor.process,
-        '/{routes+}': routes_processor.process,
-        'routes': routes_processor.process
+        '/routes': routes_processor.process
     }
 
     # process the event

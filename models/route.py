@@ -17,4 +17,4 @@ class Route:
         self.ascent = ascent
         self.height = height
         self.pitches = pitches
-        self.timestamp = datetime.datetime.utcnow()
+        self.timestamp = str(datetime.datetime.utcnow())

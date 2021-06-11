@@ -97,7 +97,7 @@ class DynamoDBClient:
         if len(climber['Items']) == 0:
             return None
         else:
-            return climber
+            return climber['Items'][0]
 
     def get_climber(self, climber_id: str) -> None:
         climber = self.get_item(table=constants.CLIMBERS_TABLE, key=climber_id)

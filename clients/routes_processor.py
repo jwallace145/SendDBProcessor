@@ -15,7 +15,12 @@ class RoutesProcessor:
         }
 
     def process(self, payload) -> None:
-        return 0
+        http_method = payload['http_method']
+        headers = payload['headers']
+
+        response = self.actions[http_method](headers)
+
+        return response
 
     def post_route(self, headers) -> None:
 

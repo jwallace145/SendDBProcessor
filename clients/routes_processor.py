@@ -24,9 +24,14 @@ class RoutesProcessor:
 
     def post_route(self, headers) -> None:
 
+        # get climber id by email
+        climber_id = self.dynamodb_client.get_climber_by_email(
+            email=headers['climber_email']
+        )
+
         # create route
         route = Route(
-            climber_email=headers['climber_email'],
+            climber_id=climber_id,
             name=headers['name'],
             grade=headers['grade'],
             type=headers['type'],

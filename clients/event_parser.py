@@ -8,6 +8,12 @@ class EventParser:
         self.resource = event['resource']
         self.payload = self.parse_event(event)
 
+        # create logger
+        self.logger = create_logger(__name__)
+
+        # log the event dictionary
+        self.logger.info('event: %s', event)
+
     def parse_event(self, event: dict) -> dict:
         http_method = event['httpMethod']
         headers = event['headers']

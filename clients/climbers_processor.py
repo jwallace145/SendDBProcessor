@@ -93,12 +93,14 @@ class ClimbersProcessor:
             self.dynamodb_client.put_climber(climber)
 
             return {
-                'statusCode': 200,
+                'statusCode': 201,
                 'headers': {
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                'body': json.dumps(vars(climber)),
+                'body': {
+                    'test': headers['email']
+                },
                 'isBase64Encoded': False
             }
         else:

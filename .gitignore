@@ -1,4 +1,4 @@
 .pytest_cache/
-.DS_Store/
+.DS_Store
 
 tests/events/

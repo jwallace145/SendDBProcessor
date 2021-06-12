@@ -98,9 +98,7 @@ class ClimbersProcessor:
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                'body': json.dumps({
-                    'status': 'successfully inserted a climber into climbers table'
-                }),
+                'body': json.dumps(vars(climber)),
                 'isBase64Encoded': False
             }
         else:

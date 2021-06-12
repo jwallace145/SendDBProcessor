@@ -1,3 +1,6 @@
+from clients.logger import create_logger
+
+
 class EventParser:
 
     def __init__(self, event: dict) -> None:

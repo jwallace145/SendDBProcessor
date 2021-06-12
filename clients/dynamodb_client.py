@@ -117,8 +117,15 @@ class DynamoDBClient:
             return climber['Items'][0]
 
     def get_climber(self, climber_id: str) -> None:
-        climber = self.get_item(table=constants.CLIMBERS_TABLE, key=climber_id)
+        climber_item = self.get_item(
+            table=constants.CLIMBERS_TABLE, key=climber_id)
+
+        climber = Climber()
+
+        climber.initialize_from_db_item(climber_item)
+
         self.logger.info('get climber %s', climber)
+
         return climber
 
     def put_climber(self, climber: Climber) -> None:

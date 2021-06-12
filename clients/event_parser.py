@@ -1,3 +1,4 @@
+import json
 from clients.logger import create_logger
 
 
@@ -12,7 +13,7 @@ class EventParser:
         self.logger = create_logger(__name__)
 
         # log the event dictionary
-        self.logger.info('event: %s', event)
+        self.logger.info('event: %s', json.dumps(event))
 
     def parse_event(self, event: dict) -> dict:
         http_method = event['httpMethod']

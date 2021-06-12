@@ -1,0 +1,103 @@
+{
+    "resource": "/{climbers+}",
+    "path": "/climbers",
+    "httpMethod": "PUT",
+    "headers": {
+        "Accept": "*/*",
+        "Accept-Encoding": "gzip, deflate, br",
+        "Cache-Control": "no-cache",
+        "email": "bob7@gmail.com",
+        "first_name": "bob",
+        "Host": "b1rzvmzxb5.execute-api.us-east-1.amazonaws.com",
+        "last_name": "builder",
+        "Postman-Token": "96b593ac-f229-43b9-b393-4dddc4d955b9",
+        "User-Agent": "PostmanRuntime/7.28.0",
+        "username": "bobthaclimber",
+        "X-Amzn-Trace-Id": "Root=1-60c44821-39f0b63c1a669dfd7ee8dd35",
+        "X-Forwarded-For": "108.4.18.103",
+        "X-Forwarded-Port": "443",
+        "X-Forwarded-Proto": "https"
+    },
+    "multiValueHeaders": {
+        "Accept": [
+            "*/*"
+        ],
+        "Accept-Encoding": [
+            "gzip, deflate, br"
+        ],
+        "Cache-Control": [
+            "no-cache"
+        ],
+        "email": [
+            "bob5@gmail.com"
+        ],
+        "first_name": [
+            "bob"
+        ],
+        "Host": [
+            "b1rzvmzxb5.execute-api.us-east-1.amazonaws.com"
+        ],
+        "last_name": [
+            "builder"
+        ],
+        "Postman-Token": [
+            "96b593ac-f229-43b9-b393-4dddc4d955b9"
+        ],
+        "User-Agent": [
+            "PostmanRuntime/7.28.0"
+        ],
+        "username": [
+            "bobthaclimber"
+        ],
+        "X-Amzn-Trace-Id": [
+            "Root=1-60c44821-39f0b63c1a669dfd7ee8dd35"
+        ],
+        "X-Forwarded-For": [
+            "108.4.18.103"
+        ],
+        "X-Forwarded-Port": [
+            "443"
+        ],
+        "X-Forwarded-Proto": [
+            "https"
+        ]
+    },
+    "queryStringParameters": null,
+    "multiValueQueryStringParameters": null,
+    "pathParameters": {
+        "climbers": "climbers"
+    },
+    "stageVariables": null,
+    "requestContext": {
+        "resourceId": "0leoct",
+        "resourcePath": "/{climbers+}",
+        "httpMethod": "PUT",
+        "extendedRequestId": "AzA1RGsmIAMF6Nw=",
+        "requestTime": "12/Jun/2021:05:37:37 +0000",
+        "path": "/dev/climbers",
+        "accountId": "650503560686",
+        "protocol": "HTTP/1.1",
+        "stage": "dev",
+        "domainPrefix": "b1rzvmzxb5",
+        "requestTimeEpoch": 1623476257524,
+        "requestId": "9e85f144-2b74-4980-b193-43d1c5246b28",
+        "identity": {
+            "cognitoIdentityPoolId": null,
+            "accountId": null,
+            "cognitoIdentityId": null,
+            "caller": null,
+            "sourceIp": "108.4.18.103",
+            "principalOrgId": null,
+            "accessKey": null,
+            "cognitoAuthenticationType": null,
+            "cognitoAuthenticationProvider": null,
+            "userArn": null,
+            "userAgent": "PostmanRuntime/7.28.0",
+            "user": null
+        },
+        "domainName": "b1rzvmzxb5.execute-api.us-east-1.amazonaws.com",
+        "apiId": "b1rzvmzxb5"
+    },
+    "body": null,
+    "isBase64Encoded": false
+}

@@ -13,7 +13,7 @@ class EventParser:
         self.logger = create_logger(__name__)
 
         # log the event dictionary
-        self.logger.info('event: %s', json.dumps(event))
+        self.logger.info('event:\n%s', json.dumps(event, indent=2))
 
     def parse_event(self, event: dict) -> dict:
         http_method = event['httpMethod']

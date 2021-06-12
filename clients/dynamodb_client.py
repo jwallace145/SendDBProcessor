@@ -99,6 +99,23 @@ class DynamoDBClient:
         else:
             return climber['Items'][0]
 
+    def get_climber_by_username(self, username: str) -> None:
+        climber = self.client.query(
+            TableName=constants.CLIMBERS_TABLE,
+            IndexName='username-index',
+            KeyConditionExpression='username = :username',
+            ExpressionAttributeValues={
+                ':username': {
+                    'S': username
+                }
+            }
+        )
+
+        if len(climber['Items']) == 0:
+            return None
+        else:
+            return climber['Items'][0]
+
     def get_climber(self, climber_id: str) -> None:
         climber = self.get_item(table=constants.CLIMBERS_TABLE, key=climber_id)
         self.logger.info('get climber %s', climber)

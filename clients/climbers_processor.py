@@ -76,33 +76,13 @@ class ClimbersProcessor:
 
     def put_climber(self, headers):
 
+        email = headers['email']
+
         # check for climber existence by email
-        climber = self.dynamodb_client.get_climber_by_email(headers['email'])
+        climber = self.dynamodb_client.get_climber_by_email(email)
 
-        if not climber:
-
-            # create climber
-            climber = Climber(
-                email=headers['email'],
-                username=headers['username'],
-                first_name=headers['first_name'],
-                last_name=headers['last_name']
-            )
-
-            # put climber
-            self.dynamodb_client.put_climber(climber)
-
-            return {
-                'statusCode': 201,
-                'headers': {
-                    'Location': climber.id,
-                    'Content-Type': 'application/json',
-                    'Access-Control-Allow-Origin': '*'
-                },
-                'body': json.dumps(vars(climber)),
-                'isBase64Encoded': False
-            }
-        else:
+        if climber:
+            msg = f'climber with email {email} exists in the database'
             return {
                 'statusCode': 200,
                 'headers': {
@@ -110,10 +90,51 @@ class ClimbersProcessor:
                     'Access-Control-Allow-Origin': '*'
                 },
                 'body': json.dumps({
-                    'status': 'climber email already exists in the database'
+                    'status': msg
                 }),
                 'isBase64Encoded': False
             }
+
+        username = headers['username']
+
+        # check for climber existence by username
+        climber = self.dynamodb_client.get_climber_by_username(username)
+
+        if climber:
+            msg = f'climber with username {username} exists in the database'
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
+                    'status': msg
+                }),
+                'isBase64Encoded': False
+            }
+
+        # create climber
+        climber = Climber(
+            email=headers['email'],
+            username=headers['username'],
+            first_name=headers['first_name'],
+            last_name=headers['last_name']
+        )
+
+        # put climber
+        self.dynamodb_client.put_climber(climber)
+
+        return {
+            'statusCode': 201,
+            'headers': {
+                'Location': climber.id,
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*'
+            },
+            'body': json.dumps(vars(climber)),
+            'isBase64Encoded': False
+        }
 
     def get_options(self, headers):
         return {

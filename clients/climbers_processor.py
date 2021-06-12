@@ -95,12 +95,11 @@ class ClimbersProcessor:
             return {
                 'statusCode': 201,
                 'headers': {
+                    'Location': climber.id,
                     'Content-Type': 'application/json',
                     'Access-Control-Allow-Origin': '*'
                 },
-                'body': {
-                    'test': headers['email']
-                },
+                'body': json.dumps(vars(climber)),
                 'isBase64Encoded': False
             }
         else:

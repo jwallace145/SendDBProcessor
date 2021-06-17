@@ -1,5 +1,6 @@
 import json
 from models.climber import Climber
+from models.route import Route
 from clients.dynamodb_client import DynamoDBClient
 
 from clients.logger import create_logger
@@ -23,12 +24,11 @@ class ClimbersProcessor:
 
     def process(self, payload: dict = {}) -> None:
 
-        # get http method and headers from payload
+        # get http method
         http_method = payload['http_method']
-        headers = payload['headers']
 
-        # call the appropriate method
-        response = self.actions[http_method](headers)
+        # call the appropriate method with payload as input
+        response = self.actions[http_method](payload)
 
         return response
 
@@ -53,9 +53,37 @@ class ClimbersProcessor:
             "isBase64Encoded": False
         }
 
-    def get_climber(self, headers):
+    def get_climber(self, payload: dict) -> dict:
         """ Handles all GET requests to climbers resource """
-        climber_id = headers['climber_id']
+        if payload['path'][1] == 'sends':
+            climber_email = payload['headers']['climber_email']
+
+            climber_id = self.dynamodb_client.get_climber_by_email(
+                climber_email)
+
+            route_items = self.dynamodb_client.get_routes_by_climber_id(
+                climber_id)
+
+            routes = []
+            for route_item in route_items:
+                route = Route()
+                route.initialize_from_db_item(route_item)
+                routes.append(route.__dict__)
+
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
+                    'numberOfSends': len(routes),
+                    'routes': routes
+                }),
+                'isBase64Encoded': False
+            }
+
+        climber_id = payload['headers']['climber_id']
 
         climber = self.dynamodb_client.get_climber(climber_id)
 

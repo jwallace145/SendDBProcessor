@@ -82,7 +82,7 @@ class DynamoDBClient:
         self.logger.info('this is the item from the get item call %s', item)
         return item
 
-    def get_climber_by_email(self, email: str) -> None:
+    def get_climber_by_email(self, email: str) -> str:
         climber = self.client.query(
             TableName=constants.CLIMBERS_TABLE,
             IndexName='email-index',
@@ -97,7 +97,7 @@ class DynamoDBClient:
         if len(climber['Items']) == 0:
             return None
         else:
-            return climber['Items'][0]
+            return climber['Items'][0]['id']['S']
 
     def get_climber_by_username(self, username: str) -> None:
         climber = self.client.query(
@@ -151,3 +151,24 @@ class DynamoDBClient:
         )
 
         return response
+
+    def get_routes_by_climber_id(self, climber_id: str = '') -> dict:
+        routes = self.client.query(
+            TableName=constants.ROUTES_TABLE,
+            IndexName='climber_id-index',
+            KeyConditionExpression='climber_id = :climber_id',
+            ExpressionAttributeValues={
+                ':climber_id': {
+                    'S': climber_id
+                }
+            }
+        )
+
+        if len(routes['Items']) == 0:
+            return None
+        else:
+            return routes['Items']
+
+    def get_climber_sends(email: str = ''):
+        # get all routes with climber_id
+        return {}

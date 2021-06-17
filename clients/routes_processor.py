@@ -29,6 +29,19 @@ class RoutesProcessor:
             email=headers['climber_email']
         )
 
+        if not climber:
+            return {
+                'statusCode': 200,
+                'headers': {
+                    'Content-Type': 'application/json',
+                    'Access-Control-Allow-Origin': '*'
+                },
+                'body': json.dumps({
+                    'status': 'that climber dont exist bro'
+                }),
+                'isBase64Encoded': False
+            }
+
         # get climber id
         climber_id = climber['id']['S']
 
@@ -49,7 +62,7 @@ class RoutesProcessor:
         self.dynamodb_client.put_route(route)
 
         return {
-            'statusCode': 200,
+            'statusCode': 201,
             'headers': {
                 'Content-Type': 'application/json',
                 'Access-Control-Allow-Origin': '*'
